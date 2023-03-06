@@ -1,0 +1,41 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.20.2",
+    "@hotwired/stimulus": "^3.0.0",
+    "@hotwired/turbo": "^7.0.1",
+    "@symfony/stimulus-bridge": "^3.2.0",
+    "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
+    "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
+    "@symfony/webpack-encore": "^4.0.0",
+    "core-js": "^3.23.0",
+    "fork-ts-checker-webpack-plugin": "^7.0.0",
+    "regenerator-runtime": "^0.13.9",
+    "sass": "^1.58.3",
+    "sass-loader": "^13.0.0",
+    "ts-loader": "^9.0.0",
+    "typescript": "^4.9.5",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-notifier": "^1.15.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "docker:build": "docker compose build --pull --no-cache",
+    "docker:up": "docker compose up",
+    "docker:down": "docker compose down --remove-orphans",
+    "docker:exec": "docker compose exec php sh",
+    "migrations:make": "docker compose exec php bin/console make:migration",
+    "migrations:migrate": "docker compose exec php bin/console doctrine:migrations:migrate",
+    "encore:dev-server": "encore dev-server",
+    "encore:dev": "encore dev",
+    "encore:watch": "encore dev --watch",
+    "encore:build": "encore production --progress",
+    "stan:analyse": "docker compose exec php vendor/bin/phpstan analyse src --level 8"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.21.0",
+    "bootstrap": "^5.2.3"
+  }
+}
