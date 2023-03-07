@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Configurator - Choose your color
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row g-3" {{ stimulus_controller('color') }}>
+            <div class="col-md-12">
+                <h1>What color should your car have?</h1>
+            </div>
+            <div class="col-md-4">
+                <label for="rangeRed" class="form-label">Red</label>
+                <input type="range" class="form-range" min="0" max="255" step="{{ carColor.red }}"
+                       id="rangeRed" data-color="red" {{ stimulus_action('color', 'changeColor') }}>
+            </div>
+            <div class="col-md-4">
+                <label for="rangeGreen" class="form-label">Green</label>
+                <input type="range" class="form-range" min="0" max="255" step="{{ carColor.green }}"
+                       id="rangeGreen" data-color="green" {{ stimulus_action('color', 'changeColor') }}>
+            </div>
+            <div class="col-md-4">
+                <label for="rangeBlue" class="form-label">Blue</label>
+                <input type="range" class="form-range" min="0" max="255" step="{{ carColor.blue }}"
+                       id="rangeBlue" data-color="blue" {{ stimulus_action('color', 'changeColor') }}>
+            </div>
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('app_configuration_type') }}" class="btn btn-primary">Back</a>
+                    <span data-url="{{ path('app_configuration_name') }}" class="btn btn-primary" {{ stimulus_target('color', 'next') }}>Next</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

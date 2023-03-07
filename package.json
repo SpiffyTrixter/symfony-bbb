@@ -9,6 +9,7 @@
     "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
     "@symfony/webpack-encore": "^4.0.0",
     "core-js": "^3.23.0",
+    "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^7.0.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.58.3",
@@ -38,6 +39,6 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.21.0",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.3.0-alpha1"
   }
 }

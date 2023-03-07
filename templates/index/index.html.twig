@@ -3,13 +3,17 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Index</h1>
-                <a href="{{ path('app_configuration_index') }}">
-                    Zum Konfigurator
-                </a>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="px-4 py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="{{ asset('build/images/favicon.svg') }}" alt="" width="72" height="57">
+            <h1 class="display-5 fw-bold">Configurator</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Quickly design and customize your own new car handmade for you with our new and specialized web configurator only for you. Designed by specialists to give you the best experience there is.</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a type="button" class="btn btn-primary btn-lg px-4 gap-3" href="{{ path('app_configuration_type') }}">
+                        Configure Now
+                    </a>
+                </div>
             </div>
         </div>
     </div>
