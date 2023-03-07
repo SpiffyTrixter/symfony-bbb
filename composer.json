@@ -1,8 +1,8 @@
 {
-    "name": "spiffytrixter/symfony-template",
+    "name": "spiffytrixter/symfony-bbb",
     "type": "project",
-    "license": "MIT",
-    "description": "A template for Symfony 6.2",
+    "license": "UNLICENSED",
+    "description": "A Symfony project for BBB",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
