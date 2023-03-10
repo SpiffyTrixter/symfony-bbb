@@ -6,21 +6,17 @@
 
 {% block body %}
     <div class="container">
-        <form name="configureTypeForm" class="my-5" method="post" action="{{ path('app_configuration_type') }}">
+        <form name="configureNameForm" class="my-5" method="post" action="{{ path('app_configuration_name') }}">
             <div class="row g-3">
                 <div class="col-md-12">
-                    <h1>What type of car do you want</h1>
+                    <h1>How would you like to name your car?</h1>
                 </div>
-                {% for type in carTypes %}
-                    <div class="col-md-3 text-center">
-                        <label>
-                            <input type="radio" name="carType" value="{{ type.value }}" class="rounded"
-                                {% if type.value is same as carType.value %} checked {% endif %}>
-                            <img src="{{ asset("build/images/configurator/types/#{type.value}.png") }}"
-                                 alt="{{ type.value }}" class="rounded">
-                        </label>
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Bachi" name="carName" value="{{ carName }}">
+                        <label for="floatingInput">Name</label>
                     </div>
-                {% endfor %}
+                </div>
                 <div class="col-md-12">
                     {% for key, flashes in app.flashes %}
                         {% for message in flashes %}
@@ -33,7 +29,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ path('app_index_index') }}" class="btn btn-lg btn-primary">Back</a>
+                        <a href="{{ path('app_configuration_color') }}" class="btn btn-lg btn-primary">Back</a>
                         <button type="submit" class="btn btn-lg btn-primary">
                             Next
                         </button>

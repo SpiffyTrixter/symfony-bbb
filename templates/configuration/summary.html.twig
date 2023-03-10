@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Configurator - Summary
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form name="resetForm" class="my-5" method="post" action="{{ path('app_configuration_summary') }}">
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <h1>You created this wonderful car</h1>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <div class="ratio ratio-16x9">
+                        <img src="{{ asset("build/images/configurator/types/#{carType.value}.png") }}"
+                             alt="{{ carType.value }}" class="rounded">
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <div class="ratio ratio-16x9" {{ stimulus_controller('color', {
+                        red: carColor.red,
+                        green: carColor.green,
+                        blue: carColor.blue,
+                    }) }}>
+                        <div class="rounded h-100 w-100" {{ stimulus_target('color', 'colorMix') }}></div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <div {{ stimulus_controller('fitty') }}>
+                        {{ carName }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    {% for key, flashes in app.flashes %}
+                        {% for message in flashes %}
+                            <div class="alert alert-{{ key }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ path('app_configuration_name') }}" class="btn btn-lg btn-primary">Back</a>
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
