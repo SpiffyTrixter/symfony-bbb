@@ -9,8 +9,7 @@
             {% for flash_error in app.flashes('verify_email_error') %}
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
             {% endfor %}
-            {{ form_start(registrationForm) }}
-            {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="row g-3">
                 <div class="col-md-12">
                     {{ form_row(registrationForm.username) }}
@@ -26,7 +25,7 @@
                 </div>
                 <div class="col-md-12 text-end">
                     <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-primary">Login</a>
-                    <button type="submit" name="registration_form[submit]" class="btn btn-lg btn-primary">Register</button>
+                    <button type="submit" class="btn btn-lg btn-primary">Register</button>
                 </div>
             </div>
             {{ form_end(registrationForm) }}

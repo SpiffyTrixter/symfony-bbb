@@ -21,10 +21,16 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" name="_remember_me" class="form-check-input" id="rememberMe" checked>
+                            <label class="form-check-label" for="rememberMe">Keep me logged in</label>
+                        </div>
                     </div>
+                    {% if error %}
+                        <div class="col-md-12">
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        </div>
+                    {% endif %}
                     <div class="col-md-12 text-end">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-primary">Register</a>

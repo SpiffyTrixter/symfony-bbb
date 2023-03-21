@@ -11,6 +11,14 @@
     </div>
 {% endblock %}
 
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            {{ error.message }}
+        {% endfor %}
+    {% endif %}
+{% endblock form_errors %}
+
 {% block widget_attributes %}
     id="{{ id }}" name="{{ full_name }}"
     {% if disabled %} disabled="disabled"{% endif %}
