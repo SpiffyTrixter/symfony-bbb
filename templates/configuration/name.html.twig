@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_w_header.html.twig' %}
 
 {% block title %}
     Configurator - Choose your type
@@ -6,11 +6,9 @@
 
 {% block body %}
     <div class="container">
+        <h1>How would you like to name your car?</h1>
         <form name="configureNameForm" class="my-5" method="post" action="{{ path('app_configuration_name') }}">
             <div class="row g-3">
-                <div class="col-md-12">
-                    <h1>How would you like to name your car?</h1>
-                </div>
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" placeholder="Bachi" name="carName" value="{{ carName }}">

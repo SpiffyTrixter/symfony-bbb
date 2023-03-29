@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_w_header.html.twig' %}
 
 {% block title %}
     Configurator - Choose your type
@@ -6,11 +6,9 @@
 
 {% block body %}
     <div class="container">
+        <h1>What type of car do you want</h1>
         <form name="configureTypeForm" class="my-5" method="post" action="{{ path('app_configuration_type') }}">
             <div class="row g-3">
-                <div class="col-md-12">
-                    <h1>What type of car do you want</h1>
-                </div>
                 {% for type in carTypes %}
                     <div class="col-md-3 text-center">
                         <label>

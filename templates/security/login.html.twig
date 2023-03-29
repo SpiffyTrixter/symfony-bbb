@@ -3,41 +3,37 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="user py-5 bg-light">
-        <div class="container">
-            <h1>Sign In</h1>
-            <form method="post">
-                <div class="row g-3">
-                    <div class="col-md-12">
-                        <div class="form-floating">
-                            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" placeholder="username" required autofocus>
-                            <label for="inputUsername">Username</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-floating">
-                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password" autocomplete="current-password" required>
-                            <label for="inputPassword">Password</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-check form-switch">
-                            <input type="checkbox" role="switch" name="_remember_me" class="form-check-input" id="rememberMe" checked>
-                            <label class="form-check-label" for="rememberMe">Keep me logged in</label>
-                        </div>
-                    </div>
-                    {% if error %}
-                        <div class="col-md-12">
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        </div>
-                    {% endif %}
-                    <div class="col-md-12 text-end">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                        <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-primary">Register</a>
-                        <button type="submit" class="btn btn-lg btn-primary">Sign In</button>
+    <div class="container">
+        <h1>Sign In</h1>
+        <form method="post" class="my-5">
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" placeholder="username" required autofocus>
+                        <label for="inputUsername">Username</label>
                     </div>
                 </div>
-            </form>
-        </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="password" autocomplete="current-password" required>
+                        <label for="inputPassword">Password</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <input type="checkbox" role="switch" name="_remember_me" class="form-check-input" id="rememberMe" checked>
+                    <label class="form-check-label" for="rememberMe">Keep me logged in</label>
+                </div>
+                {% if error %}
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
+                {% endif %}
+                <div class="col-md-12 text-end">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-primary">Register</a>
+                    <button type="submit" class="btn btn-lg btn-primary">Sign In</button>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

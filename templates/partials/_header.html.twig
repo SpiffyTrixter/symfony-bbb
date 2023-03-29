@@ -1,0 +1,23 @@
+<div class="container-fluid my-3 text-end position-absolute top-0">
+    {% if app.user %}
+        <div class="dropdown">
+            <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ app.user.username }}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_profile') }}">Profile</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a class="dropdown-item" href="{{ path('app_index_index') }}">Admin</a></li>
+                {% endif %}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    {% else %}
+        <a type="button" class="btn btn-secondary btn-lg px-4 gap-3" href="{{ path('app_login', {
+            redirect_to: app.request.requestUri|url_encode
+        }) }}">
+            Login
+        </a>
+    {% endif %}
+</div>

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_w_header.html.twig' %}
 
 {% block title %}
     Configurator - Summary
@@ -6,11 +6,9 @@
 
 {% block body %}
     <div class="container">
+        <h1>You created this wonderful car</h1>
         <form name="resetForm" class="my-5" method="post" action="{{ path('app_configuration_summary') }}">
             <div class="row g-3">
-                <div class="col-md-12">
-                    <h1>You created this wonderful car</h1>
-                </div>
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <div class="ratio ratio-16x9">
                         <img src="{{ asset("build/images/configurator/types/#{carType.value}.png") }}"
@@ -44,6 +42,7 @@
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between">
                         <a href="{{ path('app_configuration_name') }}" class="btn btn-lg btn-primary">Back</a>
+                        <a href="{{ path('app_configuration_save') }}" class="btn btn-lg btn-success">Save</a>
                         <button type="submit" class="btn btn-lg btn-primary">
                             Reset
                         </button>

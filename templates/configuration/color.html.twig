@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_w_header.html.twig' %}
 
 {% block title %}
     Configurator - Choose your color
@@ -6,15 +6,13 @@
 
 {% block body %}
     <div class="container">
+        <h1>What color should your car have?</h1>
         <form name="configureColorForm" class="my-5" method="post" action="{{ path('app_configuration_color') }}">
             <div class="row g-3" {{ stimulus_controller('color', {
                 red: carColor.red,
                 green: carColor.green,
                 blue: carColor.blue,
             }) }}>
-                <div class="col-md-12">
-                    <h1>What color should your car have?</h1>
-                </div>
                 <div class="col-md-4">
                     <label for="rangeRed" class="form-label">
                         Red <span {{ stimulus_target('color', 'red') }}>{{ carColor.red }}</span>

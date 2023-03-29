@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\CustomCar;
 use App\Enum\CarType;
+use App\Repository\CustomCarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,5 +119,37 @@ final class ConfigurationController extends AbstractController
         $carName = $session->get('carName');
 
         return $this->render('configuration/summary.html.twig', compact('carName', 'carColor', 'carType'));
+    }
+
+    #[Route('/configuration/save', name: 'app_configuration_save')]
+    public function save(Request $request, CustomCarRepository $customCarRepository): Response
+    {
+        if (!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('danger', 'You must be logged in to save your car.');
+
+            return $this->redirectToRoute('app_configuration_summary');
+        }
+
+        $session = $request->getSession();
+
+        if (!$session->has('carType') || !$session->has('carColor') || !$session->has('carName')) {
+            $this->addFlash('danger', 'You must configure your car before saving it.');
+
+            return $this->redirectToRoute('app_configuration_type');
+        }
+
+        $customCar = new CustomCar();
+        $customCar->setType($session->get('carType'));
+        $customCar->setColor($session->get('carColor'));
+        $customCar->setName($session->get('carName'));
+        $customCar->setOwner($this->getUser());
+
+        $customCarRepository->save($customCar, true);
+
+        $session->remove('carType');
+        $session->remove('carColor');
+        $session->remove('carName');
+
+        dd($customCar);
     }
 }

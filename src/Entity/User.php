@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -12,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
-final class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,6 +35,14 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: CustomCar::class)]
+    private Collection $customCars;
+
+    public function __construct()
+    {
+        $this->customCars = new ArrayCollection();
+    }
 
     public function getId(): int|null
     {
@@ -124,6 +134,36 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CustomCar>
+     */
+    public function getCustomCars(): Collection
+    {
+        return $this->customCars;
+    }
+
+    public function addCustomCar(CustomCar $customCar): self
+    {
+        if (!$this->customCars->contains($customCar)) {
+            $this->customCars->add($customCar);
+            $customCar->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomCar(CustomCar $customCar): self
+    {
+        if ($this->customCars->removeElement($customCar)) {
+            // set the owning side to null (unless already changed)
+            if ($customCar->getOwner() === $this) {
+                $customCar->setOwner(null);
+            }
+        }
 
         return $this;
     }

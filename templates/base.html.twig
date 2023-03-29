@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="{{ asset('build/images/favicon.svg') }}">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -14,10 +14,8 @@
         {% endblock %}
     </head>
     <body class="vh-100 d-flex flex-column flex-nowrap justify-content-center">
-        <div class="container mt-3">
-            
-        </div>
-
+        {% block header %}{% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>
+

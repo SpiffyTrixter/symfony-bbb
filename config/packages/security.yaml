@@ -45,7 +45,7 @@ security:
             
             logout:
                 path: app_logout
-                target: app_login
+                target: app_index_index
             
             login_throttling:
                 max_attempts: 5

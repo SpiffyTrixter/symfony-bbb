@@ -51,6 +51,10 @@ final class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        if ($request->get('redirect_to')) {
+            return new RedirectResponse($request->get('redirect_to'));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('app_profile'));
     }
 
