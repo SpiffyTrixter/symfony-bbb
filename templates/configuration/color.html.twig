@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Configurator - Choose your color
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form name="configureColorForm" class="my-5" method="post" action="{{ path('app_configuration_color') }}">
+            <div class="row g-3" {{ stimulus_controller('color', {
+                red: carColor.red,
+                green: carColor.green,
+                blue: carColor.blue,
+            }) }}>
+                <div class="col-md-12">
+                    <h1>What color should your car have?</h1>
+                </div>
+                <div class="col-md-4">
+                    <label for="rangeRed" class="form-label">
+                        Red <span {{ stimulus_target('color', 'red') }}>{{ carColor.red }}</span>
+                    </label>
+                    <input type="range" class="form-range" name="red" min="0" max="255" value="{{ carColor.red }}"
+                           id="rangeRed" {{ stimulus_action('color', 'changeColor') }}>
+                </div>
+                <div class="col-md-4">
+                    <label for="rangeGreen" class="form-label">
+                        Green <span {{ stimulus_target('color', 'green') }}>{{ carColor.green }}</span>
+                    </label>
+                    <input type="range" class="form-range" name="green" min="0" max="255" value="{{ carColor.green }}"
+                           id="rangeGreen" {{ stimulus_action('color', 'changeColor') }}>
+                </div>
+                <div class="col-md-4">
+                    <label for="rangeBlue" class="form-label">
+                        Blue <span {{ stimulus_target('color', 'blue') }}>{{ carColor.blue }}</span>
+                    </label>
+                    <input type="range" class="form-range" name="blue" min="0" max="255" value="{{ carColor.blue }}"
+                           id="rangeBlue" {{ stimulus_action('color', 'changeColor') }}>
+                </div>
+                <div class="col-12">
+                    <div class="rounded" style="height: 4rem" {{ stimulus_target('color', 'colorMix') }}></div>
+                </div>
+                <div class="col-md-12">
+                    {% for key, flashes in app.flashes %}
+                        {% for message in flashes %}
+                            <div class="alert alert-{{ key }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ path('app_configuration_type') }}" class="btn btn-lg btn-primary">Back</a>
+                        <button type="submit" class="btn btn-lg btn-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
