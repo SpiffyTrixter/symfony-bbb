@@ -59,11 +59,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
-         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/login, roles: PUBLIC_ACCESS }
-         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^/configuration/(type|color|name|summary|save), roles: PUBLIC_ACCESS }
+        - { path: ^/configuration, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/configuration/list, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:

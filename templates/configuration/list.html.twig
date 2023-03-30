@@ -1,0 +1,76 @@
+{% extends 'base_w_header.html.twig' %}
+
+{% block title %}
+    Configurations
+{% endblock %}
+
+{% block body %}
+    <div {{ turbo_stream_listen('App\\Entity\\Configuration') }}></div>
+
+    <style>
+        table {
+            table-layout: fixed;
+            min-width: 70rem;
+        }
+
+        .pagination {
+            margin: 0;
+        }
+    </style>
+    <div class="container">
+        <h1>Configurations</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <colgroup>
+                        <col style="width: 10%">
+                        <col style="width: 25%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Color</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="configuration-list">
+                        {% for configuration in configurationsPager %}
+                            {{ include('configuration/partials/_configuration-row.html.twig', {
+                                configuration: configuration
+                            }) }}
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <a class="btn btn-success" href="{{ path('app_configuration_type') }}">
+                                    Create a new entry
+                                </a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
+                        Home
+                    </a>
+                    {{ pagerfanta(configurationsPager) }}
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_profile') }}">
+                        Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

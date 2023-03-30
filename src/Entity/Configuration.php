@@ -2,12 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\CustomCarRepository;
+use App\Repository\ConfigurationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\UX\Turbo\Attribute\Broadcast;
 
-#[ORM\Entity(repositoryClass: CustomCarRepository::class)]
-class CustomCar
+#[ORM\Entity(repositoryClass: ConfigurationRepository::class)]
+#[Broadcast]
+class Configuration
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,7 +34,11 @@ class CustomCar
     #[ORM\Column(length: 10)]
     private string|null $green = null;
 
-    #[ORM\ManyToOne(inversedBy: 'customCars')]
+    #[ORM\Column(length: 100, unique: true)]
+    #[Gedmo\Slug(fields: ['name', 'type', 'id'])]
+    private string|null $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'configurations')]
     #[ORM\JoinColumn(nullable: false)]
     private User|null $owner = null;
 
@@ -111,6 +121,18 @@ class CustomCar
         $this->setRed($color['red']);
         $this->setBlue($color['blue']);
         $this->setGreen($color['green']);
+
+        return $this;
+    }
+
+    public function getSlug(): string|null
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -1,0 +1,13 @@
+{% if this.hasAlerts %}
+    <div class="alert-container my-3">
+        {% for type, messages in this.alerts %}
+            {% for message in messages %}
+                {{ component('alert', {
+                    type: type,
+                    message: message,
+                    dismissible: this.dismissible,
+                })}}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}

@@ -30,14 +30,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    {% for key, flashes in app.flashes %}
-                        {% for message in flashes %}
-                            <div class="alert alert-{{ key }} alert-dismissible fade show">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
+                    {{ component('alert-container') }}
                 </div>
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between">

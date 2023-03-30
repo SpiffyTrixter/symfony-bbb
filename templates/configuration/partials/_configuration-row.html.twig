@@ -1,0 +1,21 @@
+<tr id="configuration-{{ configuration.id }}">
+    <td><a href="{{ path('app_configuration_load', { slug: configuration.slug }) }}">{{ configuration.id }}</a></td>
+    <td>
+        <div class="col-2 text-truncate" style="max-width: 20rem; min-width: 20rem">
+            {{ configuration.name }}
+        </div>
+    </td>
+    <td>
+        <div class="ratio ratio-16x9">
+            <img src="{{ asset("build/images/configurator/types/#{configuration.type}.png") }}"
+                 alt="{{ configuration.type }}" class="rounded">
+        </div>
+    </td>
+    <td style="background-color: rgb({{ configuration.red }} {{ configuration.green }} {{ configuration.blue }})"></td>
+    <td>{{ configuration.createdAt|date('d.m.Y H:i:s') }}</td>
+    <td>{{ configuration.updatedAt|date('d.m.Y H:i:s') }}</td>
+    <td class="text-end">
+        <a class="btn btn-primary" href="{{ path('app_configuration_load', { slug: configuration.slug }) }}">Edit</a>
+        <a class="btn btn-danger" href="{{ path('app_configuration_delete', { slug: configuration.slug }) }}">Delete</a>
+    </td>
+</tr>
