@@ -36,12 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: CustomCar::class)]
-    private Collection $customCars;
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Configuration::class)]
+    private Collection $configurations;
 
     public function __construct()
     {
-        $this->customCars = new ArrayCollection();
+        $this->configurations = new ArrayCollection();
     }
 
     public function getId(): int|null
@@ -139,30 +139,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, CustomCar>
+     * @return Collection<int, Configuration>
      */
-    public function getCustomCars(): Collection
+    public function getConfigurations(): Collection
     {
-        return $this->customCars;
+        return $this->configurations;
     }
 
-    public function addCustomCar(CustomCar $customCar): self
+    public function addConfiguration(Configuration $customCar): self
     {
-        if (!$this->customCars->contains($customCar)) {
-            $this->customCars->add($customCar);
+        if (!$this->configurations->contains($customCar)) {
+            $this->configurations->add($customCar);
             $customCar->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCustomCar(CustomCar $customCar): self
-    {
-        if ($this->customCars->removeElement($customCar)) {
-            // set the owning side to null (unless already changed)
-            if ($customCar->getOwner() === $this) {
-                $customCar->setOwner(null);
-            }
         }
 
         return $this;
