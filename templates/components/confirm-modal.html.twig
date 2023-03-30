@@ -1,0 +1,37 @@
+<div class="modal fade" id="{{ this.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-hidden="true" {{ stimulus_controller('confirm-modal') }}>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ this.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ this.message }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn {{ this.cancelButton.class }}" data-bs-dismiss="modal">
+                    {{ this.cancelButton.label }}
+                </button>
+                <a type="button" class="btn {{ this.confirmButton.class }}"
+                    {{ stimulus_target('confirm-modal', 'action')}} href="{{ this.action }}">
+                    {{ this.confirmButton.label }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const modal = document.getElementById('{{ this.id }}');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const action = button.getAttribute('data-bs-action');
+        const modal = event.target;
+        const actionButton = modal.querySelector('a');
+
+        if (action !== null && action !== undefined && action !== '') {
+            actionButton.setAttribute('href', action);
+        }
+    });
+</script>

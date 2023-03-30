@@ -16,6 +16,12 @@
     <td>{{ configuration.updatedAt|date('d.m.Y H:i:s') }}</td>
     <td class="text-end">
         <a class="btn btn-primary" href="{{ path('app_configuration_load', { slug: configuration.slug }) }}">Edit</a>
-        <a class="btn btn-danger" href="{{ path('app_configuration_delete', { slug: configuration.slug }) }}">Delete</a>
+        <button class="btn btn-danger" {{ stimulus_action('confirm-modal', 'open', 'click', {
+            action: path('app_configuration_delete', {
+                slug: configuration.slug
+            }),
+        })}}>
+            Delete
+        </button>
     </td>
 </tr>

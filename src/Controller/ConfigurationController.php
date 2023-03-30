@@ -164,7 +164,9 @@ final class ConfigurationController extends AbstractController
 
         $this->addFlash('success', 'Your car has been saved.');
 
-        return $this->redirectToRoute('app_configuration_summary');
+        return $this->redirectToRoute('app_configuration_user_list', [
+            'username' => $this->getUser()->getUserIdentifier()
+        ]);
     }
 
     #[Route('/configuration/{slug}/load', name: 'app_configuration_load', requirements: ['slug' => '[a-z0-9-]+'])]
