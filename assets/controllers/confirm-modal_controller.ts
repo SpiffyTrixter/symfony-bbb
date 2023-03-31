@@ -1,13 +1,18 @@
 import {Controller} from "@hotwired/stimulus";
 
-export default class extends Controller {
+export default class extends Controller<HTMLDivElement> {
   static readonly targets = ['action'];
   declare readonly actionTarget: HTMLElement;
 
-  open(action: string) {
-    console.log('open', action);
+  connect() {
+    this.element.addEventListener('show.bs.modal', this.open.bind(this));
+  }
 
-    if (action !== '' && action !== null && action !== undefined) {
+  open(event) {
+    console.log(event);
+    const action = (event.relatedTarget as HTMLElement).getAttribute('data-action');
+
+    if (action) {
       this.actionTarget!.setAttribute('href', action);
     }
   }

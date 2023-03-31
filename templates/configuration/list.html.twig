@@ -1,5 +1,19 @@
 {% extends 'base_w_header.html.twig' %}
 
+{% set modal = {
+    id: 'deleteConfigurationModal',
+    title: 'Delete Configuration',
+    body: 'Are you sure you want to delete this configuration?',
+    confirmButton: {
+        label: 'Delete',
+        class: 'btn-danger'
+    },
+    cancelButton: {
+        label: 'Cancel',
+        class: 'btn-secondary'
+    }
+} %}
+
 {% block title %}
     Configurations
 {% endblock %}
@@ -46,7 +60,8 @@
                         {% if configurationsPager|length > 0 %}
                             {% for configuration in configurationsPager %}
                                 {{ include('configuration/partials/_configuration-row.html.twig', {
-                                    configuration: configuration
+                                    configuration: configuration,
+                                    modal: modal
                                 }) }}
                             {% endfor %}
                         {% else %}
@@ -73,7 +88,9 @@
                     <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
                         Home
                     </a>
-                    {{ pagerfanta(configurationsPager) }}
+                    {% if configurationsPager.hasNextPage %}
+                        {{ pagerfanta(configurationsPager) }}
+                    {% endif %}
                     <a class="btn btn-lg btn-primary" href="{{ path('app_profile') }}">
                         Profile
                     </a>
@@ -81,17 +98,5 @@
             </div>
         </div>
     </div>
-    {{ component('confirm-modal', {
-        id: 'deleteConfigurationModal',
-        title: 'Delete Configuration',
-        body: 'Are you sure you want to delete this configuration?',
-        confirmButton: {
-            label: 'Delete',
-            class: 'btn-danger'
-        },
-        cancelButton: {
-            label: 'Cancel',
-            class: 'btn-secondary'
-        }
-    }) }}
+    {{ component('confirm-modal', modal) }}
 {% endblock %}

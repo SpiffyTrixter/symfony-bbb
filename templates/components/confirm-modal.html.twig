@@ -21,17 +21,3 @@
         </div>
     </div>
 </div>
-<script>
-    const modal = document.getElementById('{{ this.id }}');
-
-    modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const action = button.getAttribute('data-bs-action');
-        const modal = event.target;
-        const actionButton = modal.querySelector('a');
-
-        if (action !== null && action !== undefined && action !== '') {
-            actionButton.setAttribute('href', action);
-        }
-    });
-</script>
