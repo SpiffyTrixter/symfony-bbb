@@ -7,6 +7,7 @@
 {% block body %}
     <div class="container">
         <h1>What color should your car have?</h1>
+        {{ component('alert-container') }}
         <form name="configureColorForm" class="my-5" method="post" action="{{ path('app_configuration_color') }}">
             <div class="row g-3" {{ stimulus_controller('color', {
                 red: carColor.red,
@@ -36,9 +37,6 @@
                 </div>
                 <div class="col-12">
                     <div class="rounded" style="height: 4rem" {{ stimulus_target('color', 'colorMix') }}></div>
-                </div>
-                <div class="col-md-12">
-                    {{ component('alert-container') }}
                 </div>
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center">

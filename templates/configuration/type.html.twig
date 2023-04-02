@@ -7,6 +7,7 @@
 {% block body %}
     <div class="container">
         <h1>What type of car do you want</h1>
+        {{ component('alert-container') }}
         <form name="configureTypeForm" class="my-5" method="post" action="{{ path('app_configuration_type') }}">
             <div class="row g-3">
                 {% for type in carTypes %}
@@ -19,9 +20,6 @@
                         </label>
                     </div>
                 {% endfor %}
-                <div class="col-md-12">
-                    {{ component('alert-container') }}
-                </div>
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between">
                         <a href="{{ path('app_index_index') }}" class="btn btn-lg btn-primary">Back</a>

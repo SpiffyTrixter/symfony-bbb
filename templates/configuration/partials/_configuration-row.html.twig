@@ -1,5 +1,8 @@
 <tr id="configuration-{{ configuration.id }}">
-    <td><a href="{{ path('app_configuration_load', { slug: configuration.slug }) }}">{{ configuration.id }}</a></td>
+    <td><a href="{{ path('app_configuration_load', {
+            slug: configuration.slug,
+            page: constant('App\\Controller\\ConfigurationController::PAGE_SUMMARY')
+        }) }}">{{ configuration.id }}</a></td>
     <td>
         <div class="col-2 text-truncate" style="max-width: 20rem; min-width: 20rem">
             {{ configuration.name }}
@@ -11,7 +14,14 @@
                  alt="{{ configuration.type }}" class="rounded">
         </div>
     </td>
-    <td style="background-color: rgb({{ configuration.red }} {{ configuration.green }} {{ configuration.blue }})"></td>
+    <td>
+        <div class="ratio ratio-16x9">
+            <div class="rounded text-center"
+                 style="background-color: {{ configuration.hexColor }}"
+                 data-bs-toggle="tooltip" data-bs-placement="top"
+                 data-bs-title="{{ configuration.hexColor }}"></div>
+        </div>
+    </td>
     <td>{{ configuration.createdAt|date('d.m.Y H:i:s') }}</td>
     <td>{{ configuration.updatedAt|date('d.m.Y H:i:s') }}</td>
     <td class="text-end">

@@ -1,18 +1,48 @@
 {% block create %}
+    {% set modal = {
+        id: 'deleteConfigurationModal',
+        title: 'Delete Configuration',
+        body: 'Are you sure you want to delete this configuration?',
+        confirmButton: {
+            label: 'Delete',
+            class: 'btn-danger'
+        },
+        cancelButton: {
+            label: 'Cancel',
+            class: 'btn-secondary'
+        }
+    } %}
+
     <turbo-stream action="prepend" target="configuration-list">
         <template>
             {{ include('configuration/partials/_configuration-row.html.twig', {
-                configuration: entity
+                configuration: entity,
+                modal: modal
             }) }}
         </template>
     </turbo-stream>
 {% endblock %}
 
 {% block update %}
+    {% set modal = {
+        id: 'deleteConfigurationModal',
+        title: 'Delete Configuration',
+        body: 'Are you sure you want to delete this configuration?',
+        confirmButton: {
+            label: 'Delete',
+            class: 'btn-danger'
+        },
+        cancelButton: {
+            label: 'Cancel',
+            class: 'btn-secondary'
+        }
+    } %}
+
     <turbo-stream action="update" target="configuration-{{ entity.id }}">
         <template>
             {{ include('configuration/partials/_configuration-row.html.twig', {
-                configuration: entity
+                configuration: entity,
+                modal: modal
             }) }}
         </template>
     </turbo-stream>

@@ -33,6 +33,7 @@
     </style>
     <div class="container">
         <h1>Configurations</h1>
+        {{ component('alert-container') }}
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped">
@@ -88,7 +89,7 @@
                     <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
                         Home
                     </a>
-                    {% if configurationsPager.hasNextPage %}
+                    {% if configurationsPager.hasNextPage or configurationsPager.hasPreviousPage %}
                         {{ pagerfanta(configurationsPager) }}
                     {% endif %}
                     <a class="btn btn-lg btn-primary" href="{{ path('app_profile') }}">

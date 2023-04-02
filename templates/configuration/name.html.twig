@@ -7,6 +7,7 @@
 {% block body %}
     <div class="container">
         <h1>How would you like to name your car?</h1>
+        {{ component('alert-container') }}
         <form name="configureNameForm" class="my-5" method="post" action="{{ path('app_configuration_name') }}">
             <div class="row g-3">
                 <div class="col-md-12">
@@ -14,9 +15,6 @@
                         <input type="text" class="form-control" id="floatingInput" maxlength="150" placeholder="BinnFinder" name="carName" value="{{ carName }}">
                         <label for="floatingInput">Name</label>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    {{ component('alert-container') }}
                 </div>
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between">

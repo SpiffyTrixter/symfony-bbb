@@ -26,13 +26,7 @@ class Configuration
     private string|null $type = null;
 
     #[ORM\Column(length: 10)]
-    private int|null $red = null;
-
-    #[ORM\Column(length: 10)]
-    private int|null $blue = null;
-
-    #[ORM\Column(length: 10)]
-    private string|null $green = null;
+    private string|null $hexColor = null;
 
     #[ORM\Column(length: 100, unique: true)]
     #[Gedmo\Slug(fields: ['name', 'type', 'id'])]
@@ -71,56 +65,14 @@ class Configuration
         return $this;
     }
 
-    public function getRed(): int|null
+    public function getHexColor(): string|null
     {
-        return $this->red;
+        return $this->hexColor;
     }
 
-    public function setRed(int $red): self
+    public function setHexColor(string $hexColor): self
     {
-        $this->red = $red;
-
-        return $this;
-    }
-
-    public function getBlue(): int|null
-    {
-        return $this->blue;
-    }
-
-    public function setBlue(int $blue): self
-    {
-        $this->blue = $blue;
-
-        return $this;
-    }
-
-    public function getGreen(): int|null
-    {
-        return $this->green;
-    }
-
-    public function setGreen(int $green): self
-    {
-        $this->green = $green;
-
-        return $this;
-    }
-
-    public function getColor(): array
-    {
-        return [
-            'red' => $this->getRed(),
-            'blue' => $this->getBlue(),
-            'green' => $this->getGreen(),
-        ];
-    }
-
-    public function setColor(array $color): self
-    {
-        $this->setRed($color['red']);
-        $this->setBlue($color['blue']);
-        $this->setGreen($color['green']);
+        $this->hexColor = $hexColor;
 
         return $this;
     }
