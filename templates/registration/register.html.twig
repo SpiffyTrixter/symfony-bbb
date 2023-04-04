@@ -22,7 +22,10 @@
             <div class="col-md-6">
                 {{ form_row(registrationForm.plainPassword.second) }}
             </div>
-            <div class="col-md-12 text-end">
+            <div class="col-md-4 text-start">
+                <a href="{{ path('app_index_index') }}" class="btn btn-lg btn-outline-primary">Home</a>
+            </div>
+            <div class="col-md-8 text-end">
                 <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-primary">Login</a>
                 <button type="submit" class="btn btn-lg btn-primary">Register</button>
             </div>

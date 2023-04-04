@@ -28,7 +28,10 @@
                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     </div>
                 {% endif %}
-                <div class="col-md-12 text-end">
+                <div class="col-md-4 text-start">
+                    <a href="{{ path('app_index_index') }}" class="btn btn-lg btn-outline-primary">Home</a>
+                </div>
+                <div class="col-md-8 text-end">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-primary">Register</a>
                     <button type="submit" class="btn btn-lg btn-primary">Sign In</button>

@@ -12,6 +12,8 @@ A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
+The Database should be automatically created and migrated. If not, run `docker compose exec php bin/console doctrine:migrations:migrate`.
+
 ## Features
 
 * Production, development and CI ready
