@@ -3,20 +3,16 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
     {{ component('alert-container') }}
 
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-            <li>Your template at <code><a href="{{ '/srv/app/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-        </ul>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="px-4 py-5 text-center">
+            <h1 class="display-5 fw-bold">{{ app.user.username }}</h1>
+            <p class="lead">{{ app.user.email }}</p>
+            <p>You created {{ app.user.configurations|length }} configurations.</p>
+            <a type="button" class="btn btn-primary btn-lg px-4 gap-3" href="{{ path('app_configuration_type') }}">
+                Edit
+            </a>
+        </div>
     </div>
 {% endblock %}
