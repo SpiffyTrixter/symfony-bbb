@@ -35,6 +35,7 @@
         <h1>Configurations</h1>
         {{ component('alert-container') }}
         <div class="row">
+            <turbo-frame id="configurationsTable">
             <div class="col-md-12">
                 <table class="table table-striped">
                     <colgroup>
@@ -97,6 +98,7 @@
                     </a>
                 </div>
             </div>
+            </turbo-frame>
         </div>
     </div>
     {{ component('confirm-modal', modal) }}
