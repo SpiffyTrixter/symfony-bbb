@@ -33,7 +33,7 @@
     </style>
     <div class="container">
         <h1>Configurations</h1>
-        {{ component('alert-container') }}
+        {{ component('AlertContainer') }}
         <div class="row">
             <turbo-frame id="configurationsTable">
             <div class="col-md-12">
@@ -101,5 +101,5 @@
             </turbo-frame>
         </div>
     </div>
-    {{ component('confirm-modal', modal) }}
+    {{ component('ConfirmModal', modal) }}
 {% endblock %}

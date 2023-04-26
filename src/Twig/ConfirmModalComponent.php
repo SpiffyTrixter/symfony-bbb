@@ -4,7 +4,7 @@ namespace App\Twig;
 
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent('confirm-modal')]
+#[AsTwigComponent('ConfirmModal')]
 final class ConfirmModalComponent
 {
     public string $id = 'confirm-modal';

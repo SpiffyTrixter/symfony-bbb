@@ -7,7 +7,7 @@
 {% block body %}
     <div class="container">
         <h1>What color should your car have?</h1>
-        {{ component('alert-container') }}
+        {{ component('AlertContainer') }}
         <form name="configureColorForm" class="my-5" method="post" action="{{ path('app_configuration_color') }}">
             <div class="row g-3" {{ stimulus_controller('color', {
                 red: carColor.red,

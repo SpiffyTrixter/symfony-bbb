@@ -7,7 +7,7 @@
 {% block body %}
     <div class="container">
         <h1>What type of car do you want</h1>
-        {{ component('alert-container') }}
+        {{ component('AlertContainer') }}
         <form name="configureTypeForm" class="my-5" method="post" action="{{ path('app_configuration_type') }}">
             <div class="row g-3">
                 {% for type in carTypes %}

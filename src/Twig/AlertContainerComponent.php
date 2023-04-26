@@ -5,7 +5,7 @@ namespace App\Twig;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent('alert-container')]
+#[AsTwigComponent('AlertContainer')]
 final class AlertContainerComponent
 {
     public bool $dismissible = true;
