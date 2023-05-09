@@ -43,6 +43,20 @@ final class ConfigurationRepository extends ServiceEntityRepository
         }
     }
 
+    public function removeByUser(User $user, bool $flush = false): void
+    {
+        $this->createQueryBuilder('c')
+            ->delete()
+            ->andWhere('c.owner = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->execute();
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     public function findAllPaginated(int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta
     {
         $currentPage ??= 1;

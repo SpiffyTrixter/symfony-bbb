@@ -3,23 +3,24 @@
 namespace App\Twig;
 
 use App\Entity\Configuration;
+use App\Entity\User;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 
-#[AsTwigComponent('ConfigurationRow')]
-final class ConfigurationRowComponent
+#[AsTwigComponent('UserRow')]
+final class UserRowComponent
 {
-    public Configuration $configuration;
+    public User $user;
     public string $targetModalId;
 
     #[PreMount]
     public function preMount(array $data): array
     {
         $resolver = new OptionsResolver();
-        $resolver->setRequired(['configuration', 'targetModalId']);
+        $resolver->setRequired(['user', 'targetModalId']);
 
-        $resolver->setAllowedTypes('configuration', Configuration::class);
+        $resolver->setAllowedTypes('user', User::class);
         $resolver->setAllowedTypes('targetModalId', 'string');
 
         return $resolver->resolve($data);

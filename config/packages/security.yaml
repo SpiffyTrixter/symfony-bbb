@@ -64,8 +64,10 @@ security:
         - { path: ^/configuration/(type|color|name|summary|save), roles: PUBLIC_ACCESS }
         - { path: ^/configuration, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/*/(profile|edit|delete), roles: ROLE_USER }
         - { path: ^/api, roles: ROLE_USER }
-        - { path: ^/configuration/list, roles: ROLE_ADMIN }
+        - { path: ^/users, roles: ROLE_ADMIN }
+        - { path: ^/configurations, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:

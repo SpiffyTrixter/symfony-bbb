@@ -210,7 +210,7 @@ final class ConfigurationController extends AbstractController
             return $this->redirectToRoute('app_configuration_list');
         } else {
             return $this->redirectToRoute('app_configuration_user_list', [
-                'username' => $this->getUser()->getUsername()
+                'username' => $this->getUser()->getUserIdentifier()
             ]);
         }
     }
@@ -230,7 +230,7 @@ final class ConfigurationController extends AbstractController
             3
         );
 
-        return $this->render('configuration/list.html.twig', compact('configurationsPager'));
+        return $this->render('configuration/configurations.html.twig', compact('configurationsPager'));
     }
 
     #[Route('/configurations', name: 'app_configuration_list', priority: 2)]
@@ -245,6 +245,6 @@ final class ConfigurationController extends AbstractController
             3
         );
 
-        return $this->render('configuration/list.html.twig', compact('configurationsPager'));
+        return $this->render('configuration/configurations.html.twig', compact('configurationsPager'));
     }
 }

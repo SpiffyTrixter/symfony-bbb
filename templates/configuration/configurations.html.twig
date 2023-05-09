@@ -3,7 +3,7 @@
 {% set modal = {
     id: 'deleteConfigurationModal',
     title: 'Delete Configuration',
-    body: 'Are you sure you want to delete this configuration?',
+    message: 'Are you sure you want to delete this configuration?',
     confirmButton: {
         label: 'Delete',
         class: 'btn-danger'
@@ -40,12 +40,12 @@
                 <table class="table table-striped">
                     <colgroup>
                         <col style="width: 10%">
-                        <col style="width: 25%">
+                        <col style="width: 20%">
                         <col style="width: 10%">
                         <col style="width: 10%">
                         <col style="width: 15%">
                         <col style="width: 15%">
-                        <col style="width: 15%">
+                        <col style="width: 20%">
                     </colgroup>
                     <thead>
                         <tr>
@@ -93,9 +93,15 @@
                     {% if configurationsPager.hasNextPage or configurationsPager.hasPreviousPage %}
                         {{ pagerfanta(configurationsPager) }}
                     {% endif %}
-                    <a class="btn btn-lg btn-primary" href="{{ path('app_user_index') }}">
-                        Profile
-                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_user_users') }}">
+                            Users
+                        </a>
+                    {% else %}
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_user_index') }}">
+                            Profile
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             </turbo-frame>

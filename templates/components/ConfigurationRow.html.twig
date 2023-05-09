@@ -26,6 +26,12 @@
     <td>{{ this.configuration.createdAt|date('d.m.Y H:i:s') }}</td>
     <td>{{ this.configuration.updatedAt|date('d.m.Y H:i:s') }}</td>
     <td class="text-end">
+        <a class="btn btn-outline-primary text-truncate" style="max-width: 6.5rem; min-width: 6.5rem"
+           href="{{ path('app_user_profile', {
+            username: this.configuration.owner.username
+        }) }}">
+            {{ this.configuration.owner.username }}
+        </a>
         <a class="btn btn-primary" href="{{ path('app_configuration_load', {
             slug: this.configuration.slug
         }) }}">

@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -54,5 +57,25 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    public function findAllPaginated(int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta
+    {
+        $currentPage ??= 1;
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC');
+
+        return $this->paginate($queryBuilder, $currentPage, $maxPerPage);
+    }
+
+    private function paginate(QueryBuilder $queryBuilder, int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta
+    {
+        $currentPage ??= 1;
+        $adapter = new QueryAdapter($queryBuilder);
+        return Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            $currentPage,
+            $maxPerPage
+        );
     }
 }
