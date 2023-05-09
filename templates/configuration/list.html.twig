@@ -61,9 +61,9 @@
                     <tbody id="configuration-list">
                         {% if configurationsPager|length > 0 %}
                             {% for configuration in configurationsPager %}
-                                {{ include('configuration/partials/_configuration-row.html.twig', {
+                                {{ component('ConfigurationRow', {
                                     configuration: configuration,
-                                    modal: modal
+                                    targetModalId: modal.id
                                 }) }}
                             {% endfor %}
                         {% else %}
