@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\ConfigurationRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +40,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/{username}/edit', name: 'app_user_edit', requirements: ['username' => '[a-zA-Z0-9-]+'])]
-    public function edit(User $user): Response
+    public function edit(Request $request, User $user): Response
     {
         if ($user !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
             $this->addFlash('danger', 'You can only edit your own profile.');
@@ -47,7 +48,24 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index');
         }
 
-        return $this->render('user/edit.html.twig', compact('user'));
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $this->userRepository->save($user, true);
+
+            $this->addFlash('success', 'User updated successfully');
+
+            return $this->redirectToRoute('app_user_profile', [
+                'username' => $user->getUserIdentifier()
+            ]);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'userForm' => $form,
+        ]);
     }
 
     #[Route('/{username}/delete', name: 'app_user_delete', requirements: ['username' => '[a-zA-Z0-9-]+'])]

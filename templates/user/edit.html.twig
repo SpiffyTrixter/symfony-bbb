@@ -1,0 +1,30 @@
+{% extends 'base_w_header.html.twig' %}
+
+{% block title %}
+    Edit - {{ user.username }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Edit Profile</h1>
+        {{ component('AlertContainer') }}
+        {{ form_start(userForm, {'attr': {'class': 'my-5'}}) }}
+        <div class="row g-3">
+            <div class="col-md-12">
+                {{ form_row(userForm.username) }}
+            </div>
+            <div class="col-md-12">
+                {{ form_row(userForm.email) }}
+            </div>
+            <div class="col-md-4 text-start">
+                <a href="{{ path('app_user_profile', {
+                    username: user.username
+                }) }}" class="btn btn-lg btn-danger">Cancel</a>
+            </div>
+            <div class="col-md-8 text-end">
+                <button type="submit" class="btn btn-lg btn-primary">Save</button>
+            </div>
+        </div>
+        {{ form_end(userForm) }}
+    </div>
+{% endblock %}

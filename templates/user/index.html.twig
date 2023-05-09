@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    {{ component('AlertContainer') }}
-
     <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
         <div class="px-4 py-5 text-center">
             <h1 class="display-5 fw-bold">{{ user.username }}</h1>
+            {{ component('AlertContainer') }}
             <p class="lead">{{ user.email }}</p>
             <p>You created {{ user.configurations|length }} configurations.</p>
             <div>
@@ -21,7 +20,9 @@
                         Configurations
                     </a>
                 {% endif %}
-                <a type="button" class="btn btn-primary btn-lg px-4 gap-3" href="{{ path('app_configuration_type') }}">
+                <a type="button" class="btn btn-primary btn-lg px-4 gap-3" href="{{ path('app_user_edit', {
+                    username: user.username
+                }) }}">
                     Edit
                 </a>
             </div>
