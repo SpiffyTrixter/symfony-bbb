@@ -2,7 +2,7 @@
     <div class="alert-container my-3">
         {% for type, messages in this.alerts %}
             {% for message in messages %}
-                {{ component('alert', {
+                {{ component('Alert', {
                     type: type,
                     message: message,
                     dismissible: this.dismissible,

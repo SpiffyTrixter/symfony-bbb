@@ -15,9 +15,9 @@
 
     <turbo-stream action="prepend" target="configuration-list">
         <template>
-            {{ include('configuration/partials/_configuration-row.html.twig', {
+            {{ component('ConfigurationRow', {
                 configuration: entity,
-                modal: modal
+                targetModalId: modal.id
             }) }}
         </template>
     </turbo-stream>
@@ -40,9 +40,9 @@
 
     <turbo-stream action="update" target="configuration-{{ entity.id }}">
         <template>
-            {{ include('configuration/partials/_configuration-row.html.twig', {
+            {{ component('ConfigurationRow', {
                 configuration: entity,
-                modal: modal
+                targetModalId: modal.id
             }) }}
         </template>
     </turbo-stream>

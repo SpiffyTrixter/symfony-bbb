@@ -6,6 +6,7 @@ use App\DTO\Color;
 use App\Entity\Configuration;
 use App\Enum\CarType;
 use App\Repository\ConfigurationRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 final class ConfigurationService
@@ -20,6 +21,7 @@ final class ConfigurationService
     const CAR_ID = 'carId';
 
     public function __construct(
+        private readonly Security $security,
         private readonly ConfigurationRepository $configurationRepository
     ) {}
 
@@ -99,7 +101,7 @@ final class ConfigurationService
     {
         if (!$request->getSession()->has(self::CAR_ID)) {
             $configuration = new Configuration();
-            $configuration->setOwner($request->getUser());
+            $configuration->setOwner($this->security->getUser());
 
             return $configuration;
         }

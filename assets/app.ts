@@ -12,5 +12,3 @@ import 'bootstrap';
 
 // start the Stimulus application
 import './bootstrap';
-
-import './bootstrap/bootstrap-helper';

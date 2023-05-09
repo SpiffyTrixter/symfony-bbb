@@ -86,6 +86,6 @@ final class RegistrationController extends AbstractController
 
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_profile');
+        return $this->redirectToRoute('app_user_index');
     }
 }

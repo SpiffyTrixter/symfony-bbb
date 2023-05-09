@@ -166,7 +166,7 @@ final class ConfigurationController extends AbstractController
             return $this->redirectToRoute('app_configuration_list');
         } else {
             return $this->redirectToRoute('app_configuration_user_list', [
-                'username' => $this->getUser()->getUsername()
+                'username' => $this->getUser()->getUserIdentifier()
             ]);
         }
     }
@@ -215,7 +215,7 @@ final class ConfigurationController extends AbstractController
         }
     }
 
-    #[Route('/configuration/{username}/list', name: 'app_configuration_user_list', requirements: ['username' => '[a-zA-Z0-9-]+'])]
+    #[Route('/{username}/configurations', name: 'app_configuration_user_list', requirements: ['username' => '[a-zA-Z0-9-]+'])]
     public function userList(User $user, Request $request): Response
     {
         if ($this->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
@@ -233,7 +233,7 @@ final class ConfigurationController extends AbstractController
         return $this->render('configuration/list.html.twig', compact('configurationsPager'));
     }
 
-    #[Route('/configuration/list', name: 'app_configuration_list', priority: 2)]
+    #[Route('/configurations', name: 'app_configuration_list', priority: 2)]
     public function list(Request $request): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
