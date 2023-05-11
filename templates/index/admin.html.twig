@@ -1,0 +1,28 @@
+{% extends 'base_w_header.html.twig' %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="px-4 py-5 text-center">
+            <h1 class="display-5 fw-bold">Admin</h1>
+            {{ component('AlertContainer') }}
+            <p>{{ configurations|length }} Configurations have been created since {{ configurations|first.createdAt|date('d.m.Y  H:i:s') }}</p>
+            <div class="mb-3">
+                <a type="button" class="btn btn-outline-primary btn-lg px-4 gap-3"
+                   href="{{ path('app_configuration_list') }}">
+                    Configurations
+                </a>
+            </div>
+            <p>{{ users|length }} Users have been created since {{ users|first.createdAt|date('d.m.Y H:i:s') }}</p>
+            <div>
+                <a type="button" class="btn btn-outline-primary btn-lg px-4 gap-3"
+                   href="{{ path('app_user_users') }}">
+                    Users
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
