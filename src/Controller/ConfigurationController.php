@@ -237,7 +237,9 @@ final class ConfigurationController extends AbstractController
     public function list(Request $request): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('app_configuration_summary');
+            return $this->redirectToRoute('app_configuration_user_list', [
+                'username' => $this->getUser()->getUserIdentifier()
+            ]);
         }
 
         $configurationsPager = $this->configurationRepository->findAllPaginated(

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -57,6 +58,48 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    public function searchPaginated(
+        string|null $query = null,
+        DateTime|null $createdAfter = null,
+        DateTime|null $updatedAfter = null,
+        bool|null   $hasConfigurations = null,
+        int|null    $currentPage = null,
+        int         $maxPerPage = 10
+    ): Pagerfanta
+    {
+        $hasConfigurations ??= false;
+        $currentPage ??= 1;
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC');
+
+        if ($query) {
+            $queryBuilder
+                ->andWhere('c.username LIKE :query')
+                ->orWhere('c.email LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($createdAfter) {
+            $queryBuilder
+                ->andWhere('c.createdAt >= :createdAfter')
+                ->setParameter('createdAfter', $createdAfter);
+        }
+
+        if ($updatedAfter) {
+            $queryBuilder
+                ->andWhere('c.updatedAt >= :updatedAfter')
+                ->setParameter('updatedAfter', $updatedAfter);
+        }
+
+        if ($hasConfigurations) {
+            $queryBuilder
+                ->join('c.configurations', 'configurations')
+                ->andWhere('configurations.id IS NOT NULL');
+        }
+
+        return $this->paginate($queryBuilder, $currentPage, $maxPerPage);
     }
 
     public function findAllPaginated(int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta

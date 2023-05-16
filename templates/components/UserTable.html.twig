@@ -1,0 +1,116 @@
+{% set modal = {
+    id: 'deleteUserModal',
+    title: 'Delete User',
+    message: 'Are you sure you want to delete this User?',
+    confirmButton: {
+        label: 'Delete',
+        class: 'btn-danger'
+    },
+    cancelButton: {
+        label: 'Cancel',
+        class: 'btn-secondary'
+    }
+} %}
+<div {{ attributes }}>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h1>Users</h1>
+            </div>
+            <div class="col-4">
+                <div class="input-group form-floating mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="searchUser"
+                               placeholder="Search Users" data-model="query">
+                        <label for="searchUser">Search Users</label>
+                    </div>
+                    <button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-3">
+                        <div class="mb-3">
+                            <label for="createdAfter" class="form-label">Created after</label>
+                            <input type="datetime-local" class="form-control" id="createdAfter"
+                                   placeholder="00.00.0000 00:00:00" data-model="createdAfter">
+                        </div>
+                        <div class="mb-3">
+                            <label for="updatedAfter" class="form-label">Updated after</label>
+                            <input type="datetime-local" class="form-control" id="updatedAfter"
+                                   placeholder="00.00.0000 00:00:00" data-model="updatedAfter">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="hasConfigurations"
+                                       data-model="hasConfigurations">
+                                <label class="form-check-label" for="hasConfigurations">
+                                    Has Configurations
+                                </label>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <a class="btn btn-sm btn-danger" href="{{ path('app_user_users') }}">Reset</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ component('AlertContainer') }}
+        <div class="row">
+            <turbo-frame id="usersTable">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <colgroup>
+                            <col style="width: 5%">
+                            <col style="width: 20%">
+                            <col style="width: 20%">
+                            <col style="width: 15%">
+                            <col style="width: 15%">
+                            <col style="width: 25%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="user-list">
+                        {% if computed.usersPager|length > 0 %}
+                            {% for user in computed.usersPager %}
+                                {{ component('UserRow', {
+                                    user: user,
+                                    targetModalId: modal.id
+                                }) }}
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    No Users found.
+                                </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
+                            Home
+                        </a>
+                        {% if computed.usersPager.hasNextPage or computed.usersPager.hasPreviousPage %}
+                            {{ pagerfanta(computed.usersPager) }}
+                        {% endif %}
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_configuration_list') }}">
+                            Configurations
+                        </a>
+                    </div>
+                </div>
+            </turbo-frame>
+        </div>
+    </div>
+    {{ component('ConfirmModal', modal) }}
+</div>

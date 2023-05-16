@@ -96,11 +96,8 @@ final class UserController extends AbstractController
     #[Route('/users', name: 'app_user_users', priority: 2)]
     public function users(Request $request): Response
     {
-        $usersPager = $this->userRepository->findAllPaginated(
-            $request->query->getInt('page', 1),
-            3
-        );
-
-        return $this->render('user/users.html.twig', compact('usersPager'));
+        return $this->render('user/users.html.twig', [
+            'page' => $request->query->getInt('page', 1),
+        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Configuration;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -55,6 +56,46 @@ final class ConfigurationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function searchPaginated(
+        string|null $query = null,
+        string|null $color = null,
+        DateTime|null $createdAfter = null,
+        DateTime|null $updatedAfter = null,
+        int|null    $currentPage = null,
+        int         $maxPerPage = 10
+    ): Pagerfanta
+    {
+        $currentPage ??= 1;
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC');
+
+        if ($query) {
+            $queryBuilder
+                ->andWhere('c.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($color) {
+            $queryBuilder
+                ->andWhere('c.hexColor = :color')
+                ->setParameter('color', $color);
+        }
+
+        if ($createdAfter) {
+            $queryBuilder
+                ->andWhere('c.createdAt >= :createdAfter')
+                ->setParameter('createdAfter', $createdAfter);
+        }
+
+        if ($updatedAfter) {
+            $queryBuilder
+                ->andWhere('c.updatedAt >= :updatedAfter')
+                ->setParameter('updatedAfter', $updatedAfter);
+        }
+
+        return $this->paginate($queryBuilder, $currentPage, $maxPerPage);
     }
 
     public function findAllPaginated(int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta

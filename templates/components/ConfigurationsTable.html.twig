@@ -1,0 +1,128 @@
+{% set modal = {
+    id: 'deleteConfigurationModal',
+    title: 'Delete Configuration',
+    message: 'Are you sure you want to delete this configuration?',
+    confirmButton: {
+        label: 'Delete',
+        class: 'btn-danger'
+    },
+    cancelButton: {
+        label: 'Cancel',
+        class: 'btn-secondary'
+    }
+} %}
+
+<div {{ attributes }}>
+    <div {{ turbo_stream_listen('App\\Entity\\Configuration') }}></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h1>Configurations</h1>
+            </div>
+            <div class="col-4">
+                <div class="input-group form-floating mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="searchUser"
+                               placeholder="Search Users" data-model="query">
+                        <label for="searchUser">Search Configurations</label>
+                    </div>
+                    <button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-3">
+                        <div class="mb-3">
+                            <label for="createdAfter" class="form-label">Created after</label>
+                            <input type="datetime-local" class="form-control" id="createdAfter"
+                                   placeholder="00.00.0000 00:00:00" data-model="createdAfter">
+                        </div>
+                        <div class="mb-3">
+                            <label for="updatedAfter" class="form-label">Updated after</label>
+                            <input type="datetime-local" class="form-control" id="updatedAfter"
+                                   placeholder="00.00.0000 00:00:00" data-model="updatedAfter">
+                        </div>
+                        <div class="mb-3">
+                            <label for="color" class="form-label">Color</label>
+                            <input type="color" class="form-control form-control-color" id="color" data-model="color">
+                        </div>
+                        <div class="text-end">
+                            <a class="btn btn-sm btn-danger" href="{{ path('app_configuration_list') }}">Reset</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ component('AlertContainer') }}
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <colgroup>
+                        <col style="width: 10%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Color</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="configuration-list">
+                    {% if computed.configurationsPager|length > 0 %}
+                        {% for configuration in computed.configurationsPager %}
+                            {{ component('ConfigurationRow', {
+                                configuration: configuration,
+                                targetModalId: modal.id
+                            }) }}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                No configurations found.
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <a class="btn btn-success" href="{{ path('app_configuration_type') }}">
+                                Create a new entry
+                            </a>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
+                        Home
+                    </a>
+                    {% if computed.configurationsPager.hasNextPage or computed.configurationsPager.hasPreviousPage %}
+                        {{ pagerfanta(configurationsPager) }}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_user_users') }}">
+                            Users
+                        </a>
+                    {% else %}
+                        <a class="btn btn-lg btn-primary" href="{{ path('app_user_index') }}">
+                            Profile
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ component('ConfirmModal', modal) }}
+</div>
