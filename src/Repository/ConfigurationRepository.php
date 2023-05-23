@@ -61,6 +61,7 @@ final class ConfigurationRepository extends ServiceEntityRepository
     public function searchPaginated(
         string|null $query = null,
         string|null $color = null,
+        array|null $types = null,
         DateTime|null $createdAfter = null,
         DateTime|null $updatedAfter = null,
         int|null    $currentPage = null,
@@ -81,6 +82,12 @@ final class ConfigurationRepository extends ServiceEntityRepository
             $queryBuilder
                 ->andWhere('c.hexColor = :color')
                 ->setParameter('color', $color);
+        }
+
+        if ($types) {
+            $queryBuilder
+                ->andWhere('c.type IN (:types)')
+                ->setParameter('types', $types);
         }
 
         if ($createdAfter) {
@@ -116,6 +123,16 @@ final class ConfigurationRepository extends ServiceEntityRepository
             ->orderBy('c.createdAt', 'DESC');
 
         return $this->paginate($queryBuilder, $currentPage, $maxPerPage);
+    }
+
+    public function findAllTypes(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c.type')
+            ->distinct(true)
+            ->orderBy('c.type', 'ASC');
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     private function paginate(QueryBuilder $queryBuilder, int|null $currentPage = null, int $maxPerPage = 10): Pagerfanta

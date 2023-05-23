@@ -13,12 +13,19 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 final class ConfigurationsTableComponent
 {
     use DefaultActionTrait;
+
     #[LiveProp(writable: true)]
     public string|null $query = null;
+
+    #[LiveProp(writable: true)]
+    public array|null $types = null;
+
     #[LiveProp(writable: true)]
     public string|null $color = null;
+
     #[LiveProp(writable: true, format: 'Y-m-d H:i:s')]
     public DateTime|null $createdAfter = null;
+
     #[LiveProp(writable: true, format: 'Y-m-d H:i:s')]
     public DateTime|null $updatedAfter = null;
 
@@ -31,6 +38,7 @@ final class ConfigurationsTableComponent
         return $this->configurationRepository->searchPaginated(
             $this->query,
             $this->color,
+            $this->types,
             $this->createdAfter,
             $this->updatedAfter,
             1,

@@ -61,6 +61,7 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^/api/configurations/types, roles: PUBLIC_ACCESS }
         - { path: ^/configuration/(type|color|name|summary|save), roles: PUBLIC_ACCESS }
         - { path: ^/configuration, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_USER }
