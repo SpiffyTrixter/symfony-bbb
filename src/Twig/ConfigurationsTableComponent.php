@@ -6,11 +6,12 @@ use App\Repository\ConfigurationRepository;
 use DateTime;
 use Pagerfanta\Pagerfanta;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent('ConfigurationsTable')]
-final class ConfigurationsTableComponent
+final class ConfigurationsTableComponent extends AbstractPaginatorComponent
 {
     use DefaultActionTrait;
 
@@ -33,16 +34,28 @@ final class ConfigurationsTableComponent
         private readonly ConfigurationRepository $configurationRepository
     ) {}
 
+    #[LiveAction]
+    public function resetFilters(): void
+    {
+        $this->page = 1;
+        $this->query = null;
+        $this->types = null;
+        $this->color = null;
+        $this->createdAfter = null;
+        $this->updatedAfter = null;
+    }
+
     public function getConfigurationsPager(): Pagerfanta
     {
+        dump($this->page);
         return $this->configurationRepository->searchPaginated(
             $this->query,
             $this->color,
             $this->types,
             $this->createdAfter,
             $this->updatedAfter,
-            1,
-            3
+            $this->page,
+            $this->maxPerPage
         );
     }
 }

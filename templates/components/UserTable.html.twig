@@ -11,7 +11,8 @@
         class: 'btn-secondary'
     }
 } %}
-<div {{ attributes }}>
+
+<div  {{ attributes }}>
     <div class="container">
         <div class="row">
             <div class="col-8">
@@ -49,7 +50,11 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <a class="btn btn-sm btn-danger" href="{{ path('app_user_users') }}">Reset</a>
+                            <button class="btn btn-sm btn-danger"
+                                    data-action="live#action"
+                                    data-action-name="resetFilters()">
+                                Reset
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -57,59 +62,61 @@
         </div>
         {{ component('AlertContainer') }}
         <div class="row">
-            <turbo-frame id="usersTable">
-                <div class="col-md-12">
-                    <table class="table table-striped">
-                        <colgroup>
-                            <col style="width: 5%">
-                            <col style="width: 20%">
-                            <col style="width: 20%">
-                            <col style="width: 15%">
-                            <col style="width: 15%">
-                            <col style="width: 25%">
-                        </colgroup>
-                        <thead>
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <colgroup>
+                        <col style="width: 5%">
+                        <col style="width: 20%">
+                        <col style="width: 20%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 25%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="users-list">
+                    {% if computed.usersPager|length > 0 %}
+                        {% for user in computed.usersPager %}
+                            {{ component('UserRow', {
+                                user: user,
+                                targetModalId: modal.id
+                            }) }}
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th></th>
+                            <td colspan="7" class="text-center">
+                                No Users found.
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody id="user-list">
-                        {% if computed.usersPager|length > 0 %}
-                            {% for user in computed.usersPager %}
-                                {{ component('UserRow', {
-                                    user: user,
-                                    targetModalId: modal.id
-                                }) }}
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="7" class="text-center">
-                                    No Users found.
-                                </td>
-                            </tr>
-                        {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-12">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
-                            Home
-                        </a>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_index_index') }}">
+                        Home
+                    </a>
+                    <div id="users-pager">
                         {% if computed.usersPager.hasNextPage or computed.usersPager.hasPreviousPage %}
-                            {{ pagerfanta(computed.usersPager) }}
+                            {{ pagerfanta(computed.usersPager, 'twig', {
+                                template: 'bundles/BabDevPagerfanta/live.html.twig',
+                            }) }}
                         {% endif %}
-                        <a class="btn btn-lg btn-primary" href="{{ path('app_configuration_list') }}">
-                            Configurations
-                        </a>
                     </div>
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_configuration_list') }}">
+                        Configurations
+                    </a>
                 </div>
-            </turbo-frame>
+            </div>
         </div>
     </div>
     {{ component('ConfirmModal', modal) }}
