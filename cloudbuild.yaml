@@ -1,0 +1,9 @@
+steps:
+    - name: 'docker'
+      args: ['up', '-d']
+    - name: 'node'
+      entrypoint: 'npm'
+      args: ['install']
+    - name: 'node'
+      entrypoint: 'npm'
+      args: ['run', 'encore:build']
