@@ -102,6 +102,24 @@ RUN set -eux; \
 		chmod +x bin/console; sync; \
     fi
 
+
+#install npm
+RUN apk add --no-cache nodejs npm
+
+# npm install
+COPY --link package*.json ./
+RUN set -eux; \
+	if [ -f package.json ]; then \
+		npm install; \
+	fi
+
+# build assets
+COPY --link assets assets/
+RUN set -eux; \
+	if [ -f package.json ]; then \
+		npm run encore:build; \
+	fi
+
 # Dev image
 FROM app_php AS app_php_dev
 
